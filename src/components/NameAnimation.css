@@ -1,0 +1,220 @@
+.name-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* NAMES */
+.name {
+  position: absolute;
+  top:40%;
+  font-size: 2.5rem;
+  color: #8b0000;
+  opacity: 0;
+}
+
+/* NAMES */
+.name {
+  position: absolute;
+  top: 45%;
+  font-size: 2.5rem;
+  color: #8b0000;
+  opacity: 0;
+}
+
+/* LEFT */
+.name.left {
+    
+  left: -50%;
+  animation: moveLeft 2s forwards;
+}
+
+/* RIGHT */
+.name.right {
+  color: #cdab21;
+  right: -50%;
+  animation: moveRight 2s forwards;
+}
+
+/* MOVE ANIMATIONS */
+@keyframes moveLeft {
+  from { left: -50%; opacity: 0; }
+  to { left: 40%; opacity: 1; }
+}
+
+@keyframes moveRight {
+  from { right: -50%; opacity: 0; }
+  to { right: 40%; opacity: 1; }
+}
+
+/* 🔥 FADE OUT AFTER 2s (THIS IS THE FIX) */
+.name.left,
+.name.right {
+  animation:
+    moveLeft 2s forwards,
+    fadeOut 0.8s forwards 2s;
+}
+
+.name.right {
+  animation:
+    moveRight 2s forwards,
+    fadeOut 0.8s forwards 2s;
+}
+
+/* FADE ANIMATION */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* MERGE */
+@keyframes moveLeft {
+  to { left: 40%; opacity: 1; }
+}
+
+@keyframes moveRight {
+  to { right: 40%; opacity: 1; }
+}
+
+
+
+/* GOLD SHINE */
+@keyframes goldShine {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+/* FINAL APPEAR */
+@keyframes showFinal {
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+
+.final-name {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 3rem;
+
+ background: linear-gradient(
+    120deg,
+    #d43737,
+    #d57a3d,
+    #df5018,
+    #edd624,
+    #e56e1e
+  );
+
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  opacity: 0;
+
+  animation:
+    showFinal 1s ease forwards 2s,
+    moveUp 1s ease forwards 3s,
+    goldShine 3s linear infinite;
+}
+
+/* HEART */
+.heart {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  background: red;
+  transform: translateX(-50%) rotate(-45deg);
+  animation: heartbeat 1s infinite 2s;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  width: 70px;
+  height: 70px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart::before { top: -35px; }
+.heart::after { left: 35px; }
+
+/* HEARTBEAT */
+@keyframes heartbeat {
+  0% { transform: translateX(-50%) scale(1) rotate(-45deg); }
+  50% { transform: translateX(-50%) scale(1.2) rotate(-45deg); }
+  100% { transform: translateX(-50%) scale(1) rotate(-45deg); }
+}
+
+/* SPARKLES */
+.sparkles::before,
+.sparkles::after {
+  content: "✨ ✨ ✨";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: sparkle 2s infinite;
+}
+
+.sparkles::after {
+  top: 55%;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+.fade-out {
+  animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@keyframes moveLeft {
+  from {
+    left: -50%;
+    opacity: 0;
+  }
+  to {
+    left: 40%;
+    opacity: 1;
+  }
+}
+
+@keyframes moveRight {
+  from {
+    right: -50%;
+    opacity: 0;
+  }
+  to {
+    right: 40%;
+    opacity: 1;
+  }
+}
+@keyframes moveUp {
+  from {
+    top: 45%;
+    transform: translate(-50%, 0);
+  }
+  to {
+    top: 25%;   /* 👈 moves upward */
+    transform: translate(-50%, 0);
+  }
+}

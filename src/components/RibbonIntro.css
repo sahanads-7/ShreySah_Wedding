@@ -1,0 +1,77 @@
+/* FULL SCREEN */
+.ribbon-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  z-index: 9999;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* CURTAINS */
+.curtain {
+  width: 50%;
+  height: 100%;
+
+  background: linear-gradient(
+    135deg,
+    #d4af37,
+    #b8962e
+  );
+
+  transition: transform 1.5s ease-in-out;
+}
+
+/* LEFT */
+.curtain.left {
+  transform: translateX(0);
+}
+
+/* RIGHT */
+.curtain.right {
+  transform: translateX(0);
+}
+
+/* OPEN EFFECT */
+.ribbon-screen.open .left {
+  transform: translateX(-100%);
+}
+
+.ribbon-screen.open .right {
+  transform: translateX(100%);
+}
+
+/* CENTER TEXT */
+.center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+/* TEXT STYLE */
+.center-text h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+}
+
+.center-text p {
+  margin-top: 10px;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* TEXT DISAPPEAR ON TAP */
+.ribbon-screen.open .center-text {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: all 0.3s ease;
+}
