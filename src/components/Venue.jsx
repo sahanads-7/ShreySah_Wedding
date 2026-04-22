@@ -11,7 +11,8 @@ export default function Venue({ t }) {
         px: { xs: 2, md: 4 },
         background: "#f8f5ef",
         textAlign: "center",
-        width: "100%"
+        width: "100%",
+        position:"relative"
       }}
     >
       {/* HEADER */}
@@ -73,6 +74,18 @@ export default function Venue({ t }) {
           {t.c_msg} ❤️ {t.coupleTag}
         </Typography>
       </Box>
+      <Box
+  sx={{
+    position: "absolute",
+    bottom: 10,
+    right: 12,
+    fontSize: "0.7rem",
+    color: "rgba(0,0,0,0.4)",
+    letterSpacing: "1px"
+  }}
+>
+  Creator:@ChaithraGP
+</Box>
     </Box>
   );
 }
