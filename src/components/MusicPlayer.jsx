@@ -51,7 +51,7 @@ useEffect(() => {
         ref={audioRef}
         loop
         preload="auto"
-        src={`${process.env.PUBLIC_URL}/music1.mp3`}
+        src={`${process.env.PUBLIC_URL}/music.mp3`}
       />
 
       <IconButton
