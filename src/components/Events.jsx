@@ -35,19 +35,44 @@ export default function Events({ t }) {
             </Grid>
           ))}
         </Grid>
+
+      {/* 💖 AFTER EVENT MESSAGE */}
+      <Box sx={afterContainer}>
+        
+        <Typography sx={afterTitle}>
+          {t.afterMessageTitle}
+        </Typography>
+
+        <Box sx={afterLine} />
+
+        <Typography sx={afterText}>
+          {t.afterMessage}
+        </Typography>
+
+        <Typography sx={afterSign}>
+          {t.b_Name} & {t.g_Name} 💛
+        </Typography>
+
+      </Box>
       </Box>
     </Box>
   );
 }
 
-function Info({ icon, text }) {
+function Info({ icon, text, type }) {
   return (
     <Box sx={infoRow}>
       <Box sx={{ color: "#d4af37" }}>{icon}</Box>
-      <Typography>{text}</Typography>
-    </Box>
-  );
-}
+      <Typography
+        sx={{
+          color: "#555",
+          fontWeight: type === "date" ? 600 : 400
+        }}
+      >
+        {text}
+      </Typography>
+    </Box>);
+    }
 
 /* STYLES */
 
@@ -84,4 +109,41 @@ const infoRow = {
   gap: 1,
   mb: 1,
   justifyContent: "center"
+};
+/* 💖 AFTER MESSAGE */
+
+const afterContainer = {
+  mt: 8,
+  maxWidth: "800px",
+  margin: "60px auto 0",
+  textAlign: "center"
+};
+
+const afterTitle = {
+  fontFamily: "'Playfair Display', serif",
+  fontSize: "2rem",
+  color: "#d4af37",
+  mb: 2
+};
+
+const afterLine = {
+  width: "80px",
+  height: "2px",
+  background: "#d4af37",
+  margin: "10px auto 20px",
+  opacity: 0.6
+};
+
+const afterText = {
+  color: "#666",
+  lineHeight: 1.9,
+  fontSize: "1rem",
+  whiteSpace: "pre-line"
+};
+
+const afterSign = {
+  marginTop: "25px",
+  fontFamily: "'Playfair Display', serif",
+  fontSize: "1.4rem",
+  color: "#d4af37"
 };

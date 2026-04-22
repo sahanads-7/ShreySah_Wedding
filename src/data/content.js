@@ -14,13 +14,13 @@ export const event_content = {
    
 
     muhDate: "Monday,May 4,2026",
-    muhTime: "10:30 AM onwards",
+    muhTime: "9:30 AM onwards",
 
     begDate: "Sunday,May 10,2026",
     begTime: "12:30 PM onwards",
 
     venue: "A & A Convention Hall",
-    beg_venue:"Shri Bhairaveshwara stone crusor, Shambunahalli", 
+    beg_venue:"Shri Bhairaveshwara stone crusher, Shambunahalli", 
 
     recWish: "Join us for a joyful evening 💛",
     muhWish: "Bless the couple for a beautiful journey ✨",
@@ -43,7 +43,7 @@ export const event_content = {
     recTime: "ಸಂಜೆ 7:00 ನಂತರ",
 
     muhDate: "ಸೋಮವಾರ, ಮೇ 4, 2026",
-    muhTime: "ಬೆಳಿಗ್ಗೆ 10:30 ನಂತರ",
+    muhTime: "ಬೆಳಿಗ್ಗೆ 9:30 ನಂತರ",
 
     venue: "ಎ & ಎ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್",
 
@@ -132,6 +132,22 @@ export const content_names = {
     brideName: "ಸಹನಾ",
     groomName: "ಶ್ರೇಯಸ್",
     monthYear: "4 ಮೇ 2026"
+  }
+};
+export const content_header= {
+  en: {
+    home: "Home",
+    events: "Events",
+    gallery: "Gallery",
+    venue: "Venue",
+    langToggle: "ಕನ್ನಡ"
+  },
+  kn: {
+    home: "ಮುಖಪುಟ",
+    events: "ಕಾರ್ಯಕ್ರಮಗಳು",
+    gallery: "ಗ್ಯಾಲರಿ",
+    venue: "ಸ್ಥಳ",
+    langToggle: "EN"
   }
 };
 

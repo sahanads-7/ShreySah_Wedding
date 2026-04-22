@@ -1,52 +1,58 @@
-import { useRef, useState , useEffect} from "react";
+import { useRef, useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 
+export default function MusicPlayer({ startMusic }) {
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
 
-export default function MusicPlayer() {
-  const audioRef = useRef();
-  const [playing, setPlaying] = useState(true);
-
-  const toggle = () => {
+  const playAudio = () => {
     if (!audioRef.current) return;
 
-    if (playing) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setPlaying(!playing);
+    audioRef.current.muted = false;
+    audioRef.current
+      .play()
+      .then(() => setPlaying(true))
+      .catch(() => setPlaying(false));
   };
 
+const toggle = () => {
+  if (!audioRef.current) return;
 
-  // 🔥 Try autoplay on first load
-  useEffect(() => {
-    const playAudio = () => {
-      if (audioRef.current) {
-        audioRef.current
-          .play()
-          .then(() => setPlaying(true))
-          .catch(() => {
-            // Autoplay blocked → wait for user interaction
-            setPlaying(false);
-          });
-      }
-    };
+  if (playing) {
+    audioRef.current.pause();
+    setPlaying(false);
+  } else {
+    audioRef.current.muted = false;
+    audioRef.current.play();
+    setPlaying(true);
+  }
+};
 
-    playAudio();
-      // fallback: play on first user interaction
-    document.addEventListener("click", playAudio, { once: true });
+  // 🔥 Play ONLY when intro is completed
+useEffect(() => {
+  if (startMusic && audioRef.current) {
+    audioRef.current.muted = false;
 
-    return () => {
-      document.removeEventListener("click", playAudio);
-    };
-  }, []);
-
+    audioRef.current.play()
+      .then(() => {
+        setPlaying(true);   // ✅ FIX: update icon
+      })
+      .catch(() => {
+        setPlaying(false);
+      });
+  }
+}, [startMusic]);
 
   return (
     <>
-      <audio ref={audioRef} loop src="/music1.mp3" />
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        src={`${process.env.PUBLIC_URL}/music1.mp3`}
+      />
 
       <IconButton
         onClick={toggle}
@@ -54,12 +60,8 @@ export default function MusicPlayer() {
           position: "fixed",
           bottom: 20,
           right: 20,
-          zIndex: 99999,   // 🔥 ALWAYS on top
-          background: "rgba(255,255,255,0.7)",
-          backdropFilter: "blur(6px)",
-          "&:hover": {
-            background: "rgba(255,255,255,0.9)"
-          }
+          zIndex: 99999,
+          background: "rgba(255,255,255,0.7)"
         }}
       >
         {playing ? <VolumeUpIcon /> : <VolumeOffIcon />}

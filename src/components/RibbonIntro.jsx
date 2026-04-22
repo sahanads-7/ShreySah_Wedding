@@ -1,15 +1,21 @@
 import { useState } from "react";
 import "./RibbonIntro.css";
 
-export default function RibbonIntro({ onFinish }) {
+export default function RibbonIntro({ onFinish, onStartMusic }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
 
+    // 🎵 START MUSIC immediately on tap (valid user interaction)
+    if (onStartMusic) {
+      onStartMusic();
+    }
+
+    // Continue animation
     setTimeout(() => {
       onFinish();
-    }, 1500); // match curtain animation
+    }, 1500);
   };
 
   return (

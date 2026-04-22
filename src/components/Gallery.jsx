@@ -3,23 +3,15 @@ import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
+
+
 const images = [
-  { src: "/gallery/A.jpeg" },
-  { src: "/gallery/B.jpeg" },
-  
-   { src: "/gallery/S.jpeg" },
- 
-   { src: "/gallery/D.jpeg" },
- 
-  // { src: "/gallery/F.jpeg" },
-  // { src: "/gallery/I.jpeg" },
-   { src: "/gallery/J.jpeg" },
-     { src: "/gallery/C.jpeg" },
-   
- 
-
-  
-
+  { src: `${process.env.PUBLIC_URL}/gallery/A.jpeg` },
+  { src: `${process.env.PUBLIC_URL}/gallery/B.jpeg` },
+  { src: `${process.env.PUBLIC_URL}/gallery/S.jpeg` },
+  { src: `${process.env.PUBLIC_URL}/gallery/D.jpeg` },
+  { src: `${process.env.PUBLIC_URL}/gallery/J.jpeg` },
+  { src: `${process.env.PUBLIC_URL}/gallery/C.jpeg` },
 ];
 
 export default function Gallery({t}) {
@@ -49,11 +41,11 @@ export default function Gallery({t}) {
                   setOpen(true);
                 }}
               >
-                <img
-                  src={img.src}
-                  alt="gallery"
-                  style={imgStyle}
-                />
+              <img
+  src={img.src}
+  alt="gallery"
+  style={imgStyle}
+/>
               </Box>
 
             </Grid>

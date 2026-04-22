@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 
 const menu = ["home", "events", "gallery", "venue"];
 
-export default function Header({ stopAutoScroll, setLang }) {
+export default function Header({ stopAutoScroll, setLang, t }) {
   const [active, setActive] = useState("home");
-   const [langState, setLangState] = useState("en");
 
   const handleClick = (item) => {
     if (stopAutoScroll) stopAutoScroll();
@@ -13,7 +12,7 @@ export default function Header({ stopAutoScroll, setLang }) {
     const element = document.getElementById(item);
 
     if (element) {
-      const yOffset = -60; // 🔥 match header height
+      const yOffset = -60;
       const y =
         element.getBoundingClientRect().top +
         window.pageYOffset +
@@ -44,10 +43,8 @@ export default function Header({ stopAutoScroll, setLang }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-   const handleLangToggle = () => {
-    const newLang = langState === "en" ? "kn" : "en";
-    setLangState(newLang);
-    setLang(newLang);
+  const handleLangToggle = () => {
+    setLang((prev) => (prev === "en" ? "kn" : "en"));
   };
 
   return (
@@ -64,7 +61,7 @@ export default function Header({ stopAutoScroll, setLang }) {
       <Toolbar
         disableGutters
         sx={{
-          minHeight: "60px !important", // 🔥 IMPORTANT FIX
+          minHeight: "60px !important",
           px: 2,
           display: "flex",
           justifyContent: "space-between"
@@ -79,56 +76,50 @@ export default function Header({ stopAutoScroll, setLang }) {
             justifyContent: { xs: "flex-start", md: "center" },
             overflowX: "auto",
             whiteSpace: "nowrap",
-
             "&::-webkit-scrollbar": { display: "none" }
           }}
         >
-          
           {menu.map((item) => (
             <Typography
-              key={item}
-              onClick={() => handleClick(item)}
-              sx={{
-                cursor: "pointer",
-                textTransform: "uppercase",
-                letterSpacing: 1,
-                px: 1.5,
-                py: "4px",
-                borderRadius: "20px",
-                fontSize: "0.75rem",
-                flexShrink: 0,
-              
-
-                color:
-                  active === item
-                    ? "#1c1b19"
-                    : "rgba(57, 54, 54, 0.9)",
-
-                background:
-                  active === item
-                    ? "#d4af37"
-                    : "transparent"
-              }}
-            >
-              {item}
-            </Typography>
+  key={item}
+  onClick={() => handleClick(item)}
+  sx={{
+    cursor: "pointer",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    px: 1.5,
+    py: "4px",
+    borderRadius: "20px",
+    fontSize: "0.75rem",
+    flexShrink: 0,
+    color:
+      active === item
+        ? "#1c1b19"
+        : "#333",   // 🔥 better visibility
+    background:
+      active === item
+        ? "#d4af37"
+        : "transparent"
+  }}
+>
+  {t?.[item] || item}
+</Typography>
           ))}
         </Box>
 
-        {/* LANGUAGE */}
-       {/* 🌐 SINGLE TOGGLE BUTTON */}
+        {/* LANGUAGE BUTTON */}
         <Button
           onClick={handleLangToggle}
           size="small"
           sx={{
-            color:"#1e1d1c",
-            background:"#d4af37",
+            color: "#1e1d1c",
+            background: "#d4af37",
             fontSize: "0.7rem",
             minWidth: "50px",
             ml: 1
           }}
         >
-          {langState === "en" ? "ಕನ್ನಡ" : "EN"}
+          {t.langToggle}
         </Button>
       </Toolbar>
     </AppBar>

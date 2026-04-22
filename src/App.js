@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import RibbonIntro from "./components/RibbonIntro";
 import MusicPlayer from "./components/MusicPlayer";
-import HeartButton from "./components/HeartButton";
+
 import Header from "./components/Header";
 
 import Venue from "./components/Venue";
@@ -17,7 +17,7 @@ import {
   event_content,
   gallery_content,
   venue_content,
-  content_names
+  content_names,content_header
 } from "./data/content";
 
 export default function App() {
@@ -28,54 +28,85 @@ export default function App() {
   const [openPopup, setOpenPopup] = useState(false);
     const [showIntro, setShowIntro] = useState(true);
     const [showNameAnim, setShowNameAnim] = useState(false);
-
+const [startMusic, setStartMusic] = useState(false);
 
   const t = content_names[lang];
+   const headerT = content_header[lang];
 
-  /* AUTO SCROLL */
-  useEffect(() => {
-   if (!autoScroll) return;
+ useEffect(() => {
+  if (!autoScroll) return;
 
-    let interval;
+  let scrollY = window.scrollY;
+  let animationFrame;
+  let resumeTimer;
 
-    const startScroll = () => {
-      interval = setInterval(() => {
-        window.scrollBy(0, 1);
-      }, 20);
-    };
+  const smoothScroll = () => {
+    scrollY += 0.5;
 
-    const stopScroll = () => {
-      clearInterval(interval);
-      setAutoScroll(false);
-    };
+    window.scrollTo({
+      top: scrollY,
+      behavior: "auto"
+    });
 
-    startScroll();
+    if (scrollY < document.documentElement.scrollHeight) {
+      animationFrame = requestAnimationFrame(smoothScroll);
+    }
+  };
 
-    window.addEventListener("wheel", stopScroll);
-    window.addEventListener("touchstart", stopScroll);
+  const stopAndResumeScroll = () => {
+    cancelAnimationFrame(animationFrame);
 
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("wheel", stopScroll);
-      window.removeEventListener("touchstart", stopScroll);
-    };
-  }, [opened, autoScroll]);
+    // Pause auto scroll
+    setAutoScroll(false);
 
+    // Resume after 3 seconds
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      setAutoScroll(true);
+    }, 3000);
+  };
+
+  const timer = setTimeout(() => {
+    smoothScroll();
+  }, 1000);
+
+  window.addEventListener("touchstart", stopAndResumeScroll);
+  window.addEventListener("wheel", stopAndResumeScroll);
+  window.addEventListener("pointerdown", stopAndResumeScroll);
+
+  return () => {
+    clearTimeout(timer);
+    clearTimeout(resumeTimer);
+    cancelAnimationFrame(animationFrame);
+    window.removeEventListener("touchstart", stopAndResumeScroll);
+    window.removeEventListener("wheel", stopAndResumeScroll);
+    window.removeEventListener("pointerdown", stopAndResumeScroll);
+  };
+}, [autoScroll]);
   /* POPUP AT END */
+
+
+
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const fullHeight = document.documentElement.scrollHeight;
+  const handleScroll = () => {
+    if (openPopup) return;
 
-      if (scrollTop + windowHeight >= fullHeight - 50 && !openPopup) {
-        setOpenPopup(true);
-      }
-    };
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.documentElement.scrollHeight;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [openPopup]);
+    const reachedBottom = scrollTop + windowHeight >= fullHeight - 5;
+
+    if (reachedBottom) {
+      setOpenPopup(true);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [openPopup]);
 
   if (!loadingDone) {
     return <LoadingScreen onComplete={() => setLoadingDone(true)} />;
@@ -87,10 +118,10 @@ export default function App() {
 
   return (
     <>
-     {!showIntro && (<Header setLang={setLang} stopAutoScroll={() => setAutoScroll(false)} />)}
+     {!showIntro && (<Header   t={headerT} setLang={setLang} stopAutoScroll={() => setAutoScroll(false)} />)}
 
-     {!showIntro && <MusicPlayer />}
-      <HeartButton />
+     {!showIntro && <MusicPlayer startMusic={startMusic}  />}
+      {/* <HeartButton /> */}
       <Leaves />
       
 
@@ -134,19 +165,18 @@ export default function App() {
 {showNameAnim && <NameAnimation />}
   {/* INTRO ANIMATION INSIDE HOME */}
 {showIntro && (
-  <RibbonIntro
-    onFinish={() => {
-      setShowIntro(false);
-      setAutoScroll(true);
-      // 🔥 trigger name animation after curtain opens
-      setTimeout(() => {
-        setShowNameAnim(true);
+ <RibbonIntro
+  onStartMusic={() => setStartMusic(true)}
+  onFinish={() => {
+    setShowIntro(false);
+    setAutoScroll(true);
 
-        // auto hide animation
-        setTimeout(() => setShowNameAnim(false), 4000);
-      }, 1000);
-    }}
-  />
+    setTimeout(() => {
+      setShowNameAnim(true);
+      setTimeout(() => setShowNameAnim(false), 4000);
+    }, 1000);
+  }}
+/>
 )}
 
 
@@ -182,7 +212,7 @@ const bgStyle = {
   left: 0,
   width: "100%",
   height: "100%",
-  backgroundImage: "url('/D.jpeg')",
+ backgroundImage: `url(${process.env.PUBLIC_URL}/D.jpeg)`,
   backgroundSize: "cover",
   backgroundPosition: "60% center",
   zIndex: 0
