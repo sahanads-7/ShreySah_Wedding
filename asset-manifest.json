@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ShreySah_Wedding/static/css/main.5d44aa24.css",
-    "main.js": "/ShreySah_Wedding/static/js/main.8c86b2c0.js",
+    "main.js": "/ShreySah_Wedding/static/js/main.f4243371.js",
     "static/js/488.d56a38c2.chunk.js": "/ShreySah_Wedding/static/js/488.d56a38c2.chunk.js",
     "index.html": "/ShreySah_Wedding/index.html",
     "main.5d44aa24.css.map": "/ShreySah_Wedding/static/css/main.5d44aa24.css.map",
-    "main.8c86b2c0.js.map": "/ShreySah_Wedding/static/js/main.8c86b2c0.js.map",
+    "main.f4243371.js.map": "/ShreySah_Wedding/static/js/main.f4243371.js.map",
     "488.d56a38c2.chunk.js.map": "/ShreySah_Wedding/static/js/488.d56a38c2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5d44aa24.css",
-    "static/js/main.8c86b2c0.js"
+    "static/js/main.f4243371.js"
   ]
 }
